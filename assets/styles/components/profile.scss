@@ -1,0 +1,35 @@
+// components/profile.scss
+
+.profile-page {
+    width: 80%;
+    margin: 0 auto;
+    padding: 2em 0;
+
+    .profile-header {
+        font-size: 2em;
+        margin-bottom: 1em;
+        text-align: center;
+        color: #333;
+    }
+
+    .profile-links {
+        .profile-links-list {
+            list-style: none;
+            padding-left: 0;
+
+            .profile-link-item {
+                margin-bottom: 0.5em;
+
+                a {
+                    text-decoration: none;
+                    color: #007BFF;
+                    transition: color 0.3s;
+
+                    &:hover {
+                        color: #0056b3;
+                    }
+                }
+            }
+        }
+    }
+}

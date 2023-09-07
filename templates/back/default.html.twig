@@ -1,0 +1,16 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Espace administrateur {% endblock %}
+
+{% block body %}
+    <div class="profile-page">
+        <h1 class="profile-header">Interface administrateur</h1>
+        <div class="profile-links">
+            <ul>
+                <li><a href="{{ path('back_app_users') }}">Gestion des utilisateurs</a></li>
+                <li><a href="#">Gestion des cadeaux</a></li>
+                <li><a href="#">Gestion des listes</a></li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

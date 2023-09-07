@@ -1,0 +1,58 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+
+    <div class="container">
+        <div class="container-center">
+            <div class="container-form-back">
+                <div class="container-form-login">  {# Utilisez la nouvelle classe CSS ici #}
+                    <form method="post">
+                        <h2 class="form-register-title">Connectez-vous</h2>  {# J'ai utilisé la même classe que celle du titre du formulaire d'inscription pour une cohérence visuelle #}
+                        <div>
+                            <label for="inputEmail">Email:</label>
+                            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                        </div>
+                        <div>
+                            <label for="inputPassword">Password:</label>
+                            <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                        </div>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        <div class="flex">
+                            <button class="btn btn-lg btn-default" type="submit">Connexion</button>
+                        </div>
+                        <hr />
+                        <div>
+                            <p>Créer un compte <a class="btn-default" href="/register">ICI</a></p>
+                            <p>Un problème avec votre mot de passe ? <a class="btn-default" href="/manage-password">ICI</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {# Cette section a été laissée en commentaire car elle concerne la fonction "Se souvenir de moi". Si vous décidez de l'utiliser plus tard, décommentez simplement cette section.
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" name="_remember_me"> Remember me
+            </label>
+        </div>
+        #}
+
+        <svg class="login-footer" height="115" viewBox="0 0 390 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M300.136 51.304C366.73 30.5235 407.149 36.8765 425 40.845L425 248L-81.1141 248C-92.7681 171.949 -103.701 16.5579 -54.1991 3.39691C7.67783 -13.0543 55.9874 34.3512 119.778 57.7978C160.012 72.5861 211.046 79.1044 300.136 51.304Z" fill="#FFDAD6"/>
+        </svg>
+    </div>
+{% endblock %}

@@ -1,0 +1,158 @@
+main {
+    min-height: 100vh;
+    width: 100%;
+    header {
+        display: flex;
+        flex-direction: column;
+        background: #F4ECF9;
+        padding: 0 16px;
+
+        nav {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            img {
+                width: 37.22px;
+                height: 49.34px;
+            }
+
+            ul {
+                display: flex;
+                flex-direction: row;
+                gap: 24px;
+                align-items: center;
+
+                li {
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 16px;
+                    line-height: 24px;
+                    display: flex;
+                    align-items: center;
+                    color: #355070;
+                }
+            }
+        }
+
+        div#back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            p {
+                font-style: normal;
+                font-weight: 600;
+                font-size: 14px;
+                line-height: 16px;
+                color: #355070;
+            }
+        }
+
+        div.title {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 16px;
+            gap: 8px;
+            img {
+                width: 155px;
+                height: fit-content;
+            }
+
+            h1 {
+                font-style: normal;
+                font-weight: 600;
+                font-size: 40px;
+                line-height: 60px;
+                color: #355070;
+                position: relative;
+                bottom: -12px;
+            }
+        }
+
+        @media screen and (min-width: 641px) {
+            div.title {
+                flex-direction: row;
+
+                display: flex;
+                align-items: center;
+
+            }
+        }
+    }
+    @media screen and (min-width: 641px) {
+        header {
+            padding: 0 128px;
+        }
+    }
+    section {
+        display: flex;
+        flex-direction: column;
+        padding: 0 16px;
+        overflow-y: auto;
+        //position: relative;
+        //height: 100%;
+        &:before {
+            content: '';
+            background-position: bottom right;
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            right: 0px;
+            top: 488px;
+            background-repeat: no-repeat;
+            background-size: contain;
+            z-index:0;
+            background-attachment: local, scroll;
+        }
+
+        div:first-child {
+            align-self: flex-end;
+            margin-bottom: 36px;
+            margin-top: 34px;
+            z-index: 20;
+
+            p {
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 24px;
+                color: #5D738D;
+
+            }
+        }
+
+        div:nth-child(2) {
+            font-style: normal;
+            font-weight: 400;
+            font-size: 24px;
+            line-height: 30px;
+            color: #355070;
+            z-index: 20;
+            h1 {
+                font-style: normal;
+                font-weight: 500;
+                font-size: 32px;
+                line-height: 48px;
+                color: #355070;
+                padding-left: 45px;
+                display: flex;
+                align-items: flex-end;
+                margin-top: 45px;
+                margin-left: 16px;
+                &:before {
+                    content: '';
+                    background-position: bottom right;
+                    position: absolute;
+                    width: 60px;
+                    height: 77px;
+                    left: 16px;
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                }
+            }
+        }
+    }
+}

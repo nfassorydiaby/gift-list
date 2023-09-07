@@ -1,0 +1,49 @@
+.options-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background: #f7f7f7; // fond légèrement gris
+    border-radius: 5px;
+    max-width: 400px; // largeur maximale pour le container
+    margin: 50px auto; // centré horizontalement
+
+    .error-message {
+        background-color: #f44336; // fond rouge
+        color: white; // texte blanc
+        border-radius: 5px; // bordure arrondie
+        padding: 10px; // espacement intérieur
+        margin-bottom: 20px; // espace en dessous
+        width: 100%; // prend toute la largeur
+        text-align: center; // centre le texte
+    }
+
+    .options-title {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+
+    .email-form {
+        display: flex;
+        flex-direction: column;
+
+        .email-input {
+            margin-bottom: 20px;
+        }
+    }
+
+    .btn-default {
+        padding: 10px 20px;
+        background: #000;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background: #333;
+        }
+    }
+}
+

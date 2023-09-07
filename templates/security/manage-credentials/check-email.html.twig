@@ -1,0 +1,26 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+
+    <div class="options-container">
+
+        {# Afficher les messages d'erreur ici #}
+        {% for message in app.flashes('failure') %}
+            <div class="error-message">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <h2 class="options-title">Entrez votre mail</h2>
+        <div class="options">
+            <form action="{{ path('app_check_email') }}" method="post" class="email-form">
+                <div class="email-input">
+                    <input type="email" id="email" name="email" required placeholder="Adresse e-mail">
+                </div>
+                <button type="submit" class="btn-default">Valider</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

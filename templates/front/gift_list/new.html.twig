@@ -1,0 +1,23 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Créer une nouvelle liste de cadeaux{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="container-form-gift-list">
+            <h2>Créer une nouvelle liste de cadeaux</h2>
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+
+            <div class="flex">
+                <button type="submit" class="btn btn-submit">Créer</button>
+            </div>
+            {{ form_end(form) }}
+
+            <hr />
+
+            <a href="{{ path('front_app_gift_list_index') }}" class="btn-link">Retour à la liste</a>
+        </div>
+    </div>
+{% endblock %}

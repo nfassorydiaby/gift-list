@@ -1,0 +1,32 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Toutes les listes de cadeaux{% endblock %}
+
+{% block body %}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="gift-list-page">
+        <h1 class="gift-list-header">Toutes les listes de cadeaux</h1>
+        <div class="gift-lists">
+            {% if giftLists|length > 0 %}
+                <ul class="gift-lists-list">
+                    {% for giftList in giftLists %}
+                        <li class="gift-list-item">
+                            <h2>{{ giftList.title }}</h2>
+                            <p>{{ giftList.description }}</p>
+                            <a href="{{ path('app_gift_list_show', {'id': giftList.id}) }}">Voir la liste</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Il n'y a actuellement aucune liste de cadeaux disponible.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

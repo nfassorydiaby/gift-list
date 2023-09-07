@@ -1,0 +1,86 @@
+.admin-page {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+
+    .admin-header {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .admin-links {
+        margin-top: 20px;
+
+        .user-list {
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
+
+            .user-item {
+                display: table-row;
+
+                .user-header {
+                    font-weight: bold;
+                    background-color: #f2f2f2;
+                }
+
+                .user-info {
+                    display: table-cell;
+                    padding: 8px;
+                    border-bottom: 1px solid #ddd;
+
+                    .validate-user-icon{
+                        background-color: #007bff;
+
+                        &:hover {
+                            background-color: #0056b3;
+                        }
+                    }
+
+                    .cancel-user-icon{
+                        background-color: #d54a40;
+
+                        &:hover {
+                            background-color: #b32117;
+                        }
+                    }
+
+                    .validate-user-icon,
+                    .cancel-user-icon {
+                        border: none;
+                        border-radius: 5px;
+                        color: #fff;
+                        cursor: pointer;
+                        display: inline-block;
+                        margin-right: 5px;
+                        padding: 1px 5px;
+                        text-decoration: none;
+                        transition: background-color .3s ease-in-out;
+                    }
+
+                    
+                }
+
+                .edit-user-icon {
+                    display: table-cell;
+                    padding: 8px;
+                    text-align: center;
+                    border-bottom: 1px solid #ddd;
+
+                    a {
+                        display: inline-block;
+                        text-decoration: none;
+                        color: #007bff;
+                        transition: color 0.3s ease-in-out;
+                    }
+
+                    &:hover {
+                        color: #0e60b7;
+                    }
+                }
+            }
+        }
+    }
+}

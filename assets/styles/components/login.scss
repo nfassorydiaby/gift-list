@@ -1,0 +1,62 @@
+/* ... (Reste de votre code existant pour "default") ... */
+
+/* Styles spécifiques pour la page de connexion */
+.container-form-login {
+    max-width: 400px; // Une largeur plus petite pour le formulaire
+    margin: 50px auto;
+    background: #f7f7f7; // Reprendre le fond légèrement gris
+    padding: 30px;
+    border-radius: 5px; // Ajout d'une bordure arrondie pour adoucir l'apparence
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); // Une ombre légère pour donner un peu de profondeur
+
+    h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #000000; // Couleur du titre
+    }
+
+    label {
+        display: block;
+        margin-bottom: 7px;
+        font-weight: bold;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .flex {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    button.btn-default {
+        padding: 10px 20px;
+        background: #000000; // Fond noir pour le bouton
+        color: #ffffff; // Texte blanc pour le bouton
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+
+        &:hover {
+            background: #333333; // Foncer légèrement au survol
+        }
+    }
+
+    a.btn-default {
+        color: #e67e22; // Couleur d'accent pour les liens dans le formulaire
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+

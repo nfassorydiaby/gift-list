@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{% block title %}Welcome to Gift Lists Website!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+    </head>
+    <body class="front">
+
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <h1>Gift List</h1>
+                    <nav>
+                        <ul>
+                            <li><a href="#">Accueil</a></li>
+                            <li><a href="{{ path('front_app_gift_list_new') }}">Créer une Liste</a></li>
+                            <li><a href="{{ path('front_app_gift_list_index') }}">Parcourir les Listes</a></li>
+                        </ul>
+                    </nav>
+                    <div class="login-link">
+                        {% if app.user %}
+                            <span>
+                        <a href="{{ path('front_app_profile_default') }}">Profil</a>
+                    </span>
+                            <a class="disconnect" href="/logout">Déconnexion</a>
+                        {% else %}
+                            <a href="/login">Connexion</a>
+                            <a href="/register">Inscription</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="container">
+                {% block body %}{% endblock %}
+            </div>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,41 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Modification de mes informations{% endblock %}
+
+
+{% block body %}
+<div class="container">
+
+    <div class="container-center">
+        <div class="container-form-back">
+            <div class="container-back-butt">
+                <a href="{{ path('front_app_profile_default') }}" class="back-button">Retour</a>
+            </div>
+            <div class="container-form">
+                {{ form_start(editUserForm) }}
+                    <h2 class="form-register-title">Modification du mot de passe</h2>
+
+                    {{ form_row(editUserForm.lastname, {label: 'Nom:'}) }}
+                    {{ form_row(editUserForm.firstname, {label: 'Prenom:'}) }}
+
+                    <div class="flex">
+                        <button type="submit" class="btn-default">Valider</button>
+                    </div>
+                {{ form_end(editUserForm) }}
+            </div>
+        </div>
+        {#<div class="container-form-register">
+
+            {{ form_start(editUserForm) }}
+                <h2 class="form-register-title">Modification du mot de passe</h2>
+
+                {{ form_row(editUserForm.nom, {label: 'Nom:'}) }}
+                {{ form_row(editUserForm.prenom, {label: 'Prenom:'}) }}
+
+                <div class="flex">
+                    <button type="submit" class="btn-default">Valider</button>
+                </div>
+            {{ form_end(editUserForm) }}
+        </div>#}
+    </div>
+{% endblock %}

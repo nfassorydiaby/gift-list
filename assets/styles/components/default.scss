@@ -1,0 +1,83 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: #ffffff;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;  // Espace généreux pour une meilleure lisibilité
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+header {
+    background: #ffffff;  // Fond blanc pour le header
+    color: #000000;       // Texte noir pour le header
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;  // Une fine bordure pour séparer le header du contenu
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    h1 {
+        margin: 0;
+        font-size: 1.8em;
+        font-weight: 700;  // Gras pour le titre
+    }
+
+    nav {
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+
+            li {
+                margin-right: 20px;
+                &:last-child {
+                    margin-right: 0;
+                }
+                a {
+                    color: #000000;
+                    text-decoration: none;
+                    font-weight: 600;  // Un peu gras pour les liens de navigation
+                    transition: color 0.3s ease;  // Transition douce pour les survols
+                    &:hover {
+                        color: #e67e22;  // Couleur d'accent pour le survol
+                    }
+                }
+            }
+        }
+    }
+
+    .login-link {
+        display: flex;
+        align-items: center;
+        span {
+            margin-right: 10px;
+            a {
+                font-weight: bold;
+                color: #000000;
+            }
+        }
+        a {
+            color: #e67e22;  // Couleur d'accent pour le lien de connexion
+            text-decoration: none;
+            margin-left: 10px;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.front {
+    background: #f7f7f7;  // Un fond légèrement gris pour le contenu
+    //padding: 20px 0;
+}
