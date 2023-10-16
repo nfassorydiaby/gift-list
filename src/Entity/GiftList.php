@@ -12,8 +12,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 
-
-
 #[ORM\Entity(repositoryClass: GiftListRepository::class)]
 class GiftList
 {
