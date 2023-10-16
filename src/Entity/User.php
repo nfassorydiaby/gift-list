@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -41,6 +43,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     private $resetToken;
+
+    #[ORM\ManyToMany(targetEntity: GiftList::class,inversedBy: 'user')]
+    private $giftLists;
+
+    public function __construct()
+    {
+        $this->giftLists = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -156,6 +166,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setResetToken(?string $resetToken): static
     {
         $this->resetToken = $resetToken;
+        return $this;
+    }
+
+    /**
+     * @return Collection|GiftList[]
+     */
+    public function getGiftLists(): Collection
+    {
+        return $this->giftLists;
+    }
+
+    public function addGiftList(GiftList $giftList): self
+    {
+        if (!$this->giftLists->contains($giftList)) {
+            $this->giftLists[] = $giftList;
+            $giftList->setUser($this);
+        }
+        return $this;
+    }
+
+    public function removeGiftList(GiftList $giftList): self
+    {
+        if ($this->giftLists->contains($giftList)) {
+            $this->giftLists->removeElement($giftList);
+            // set the owning side to null
+            if ($giftList->getUser() === $this) {
+                $giftList->setUser(null);
+            }
+        }
         return $this;
     }
 }

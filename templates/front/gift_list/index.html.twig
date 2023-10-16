@@ -18,9 +18,9 @@
                 <ul class="gift-lists-list">
                     {% for giftList in giftLists %}
                         <li class="gift-list-item">
-                            <h2>{{ giftList.title }}</h2>
+                            <h2>{{ giftList.titre }}</h2>
                             <p>{{ giftList.description }}</p>
-                            <a href="{{ path('app_gift_list_show', {'id': giftList.id}) }}">Voir la liste</a>
+                            <a href="{{ path('front_app_gift_list_show', {'id': giftList.id}) }}">Voir la liste</a>
                         </li>
                     {% endfor %}
                 </ul>

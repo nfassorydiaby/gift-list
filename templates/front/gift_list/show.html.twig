@@ -1,0 +1,69 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}{{ giftList.titre }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="container-form-gift-list">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('error') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <h2>{{ giftList.titre }}</h2>
+            
+            <div>
+                <strong>Description :</strong>
+                <p>{{ giftList.description }}</p>
+            </div>
+            <div>
+                <strong>Dates :</strong>
+                <ul>
+                    <li>Date d'ouverture: {{ giftList.getDateOuverture()|date('d/m/Y') }}</li>
+                    <li>Date de fin: {{ giftList.getDateFinOuverture()|date('d/m/Y') }}</li>
+                </ul>
+            </div>
+            <div>
+                <strong>Thèmes :</strong>
+                <ul>
+                    {% for theme in giftList.getGiftListThemes %}
+                        <li>{{ theme.nom }} {# Assurez-vous que votre entité GiftListTheme ait une propriété ou une méthode qui retourne le nom du thème #}</li>
+                    {% else %}
+                        <li>Aucun thème associé à cette liste.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div>
+                <strong>Statut :</strong>
+                <ul>
+                    <li>Publique: {{ giftList.isIsPrivate() ? 'Non' : 'Oui' }}</li>
+                    {% if app.user and app.user == giftList.user %}
+                        <li>Active: {{ giftList.isIsActive() ? 'Oui' : 'Non' }}</li>
+                        <li>Archivée: {{ giftList.isArchived() ? 'Oui' : 'Non' }}</li> {# Assurez-vous d'avoir une méthode isIsArchived ou un champ similaire #}
+                    {% endif %}
+                </ul>
+            </div>
+            <hr />
+            {% if app.user and app.user == giftList.user %}
+                <a href="{{ path('front_app_gift_list_edit', {'id': giftList.id}) }}" class="btn-link">Modifier cette liste</a>
+                {% if giftList.isArchived() %}
+                    <a href="{{ path('front_app_gift_list_unarchive', {'id': giftList.id}) }}" class="btn-link" onclick="return confirm('Êtes-vous sûr de vouloir désarchiver cette liste?');">Désarchiver cette liste</a>
+                {% else %}
+                    <a href="{{ path('front_app_gift_list_archive', {'id': giftList.id}) }}" class="btn-link" onclick="return confirm('Êtes-vous sûr de vouloir archiver cette liste?');">Archiver cette liste</a>
+                {% endif %}
+                    <form action="{{ path('front_app_gift_list_delete', {'id': giftList.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette liste?');" style="display: inline-block;">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ giftList.id) }}">
+                        <button class="btn btn-danger">Supprimer cette liste</button>
+                    </form> 
+            {% endif %}
+
+            <a href="{{ path('front_app_gift_list_index') }}" class="btn-link">Retour à la liste</a>
+        </div>
+    </div>
+{% endblock %}

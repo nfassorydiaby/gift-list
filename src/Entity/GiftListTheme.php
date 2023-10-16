@@ -18,7 +18,7 @@ class GiftListTheme
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\OneToMany(mappedBy: 'giftListTheme', targetEntity: GiftList::class)]
+    #[ORM\ManyToMany(mappedBy: 'giftListThemes', targetEntity: GiftList::class)]
     private Collection $giftLists;
 
     public function __construct()

@@ -1,0 +1,21 @@
+type: install
+name: HelloKaamelott
+3
+id: hellokaamelott
+categories: ["apps/dev-and-admin-tools"]
+logo: https://symfony.com/Logos/symfony_black_03.png
+translations
+
+description: |
+  Fichier d'Infrastructure As Code pour déployer l'application HelloKas
+
+ssl: true
+
+nodes:
+    - image: yoanbernabeu/hellokaamelott: latest count: 1
+        cloudlets: 8
+        fixedCloudlets: A
+        nodeGroup: cp
+        displayName: FrontWeb 
+        volumes:
+            - /var /www

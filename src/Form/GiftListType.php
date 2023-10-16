@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class GiftListType extends AbstractType
 {
@@ -35,7 +37,7 @@ class GiftListType extends AbstractType
                 'label' => 'Liste privée?',
                 'required' => false,
             ])
-            ->add('passsword', PasswordType::class, [
+            ->add('password', PasswordType::class, [
                 'label' => 'Mot de passe (si privée)',
                 'required' => false,
             ])
@@ -51,12 +53,32 @@ class GiftListType extends AbstractType
                 'label' => 'Liste active?',
                 'required' => false,
             ])
-            ->add('giftListTheme', EntityType::class, [
+            ->add('giftListThemes', EntityType::class, [
                 'class' => GiftListTheme::class,  // Spécifiez l'entité à utiliser
                 'choice_label' => 'nom',  // Spécifiez l'attribut à afficher dans le choix
                 'label' => 'Thème de la liste de cadeaux',
                 'multiple' => true,  
+            ])
+            ->add('coverImage', FileType::class, [
+                'label' => 'Image de couverture (fichier image)',
+                'mapped' => false, // car l'entité contient le chemin du fichier, pas le fichier lui-même
+                'required' => false,
+                'constraints' => [
+                    new Assert\Image([
+                        'maxSize' => '5M'
+                        // ... autres contraintes si nécessaire ...
+                    ]),
+                ],
             ]);
+
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            $data = $event->getData();
+            $form = $event->getForm();
+    
+            if (isset($data['isPrivate']) && $data['isPrivate'] == true) {
+                $form->getConfig()->getOption('validation_groups')[] = 'PasswordRequired';
+            }
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void

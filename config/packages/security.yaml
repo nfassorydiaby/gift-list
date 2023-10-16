@@ -35,7 +35,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # seul le rôle admin peut accéder aux urls /admin
-        #- { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         # seul le rôle admin peut accéder aux urls /login et logout sans rôle
         - { path: ^/login, roles: PUBLIC_ACCESS }
         # seul le rôle user peut accéder aux urls /profile

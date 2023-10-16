@@ -5,6 +5,14 @@ namespace App\Entity;
 use App\Repository\GiftListRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
+
+
 
 #[ORM\Entity(repositoryClass: GiftListRepository::class)]
 class GiftList
@@ -24,7 +32,13 @@ class GiftList
     private ?bool $isPrivate = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $passsword = null;
+    /**
+     * @Assert\NotBlank(groups={"PasswordRequired"})
+     */
+    private ?string $password = null;
+
+    #[ORM\Column]
+    private $isArchived = false;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateOuverture = null;
@@ -35,8 +49,32 @@ class GiftList
     #[ORM\Column]
     private ?bool $isActive = null;
 
-    #[ORM\ManyToOne(inversedBy: 'giftLists')]
-    private ?GiftListTheme $giftListTheme = null;
+    #[ORM\ManyToMany(targetEntity: GiftListTheme::class,inversedBy: 'giftLists')]
+    private $giftListThemes = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class,inversedBy: 'giftLists')]
+    private $user;
+
+    /**
+     * NOTE: Ce n'est pas un champ mappé de l'entité de base de données, juste une simple propriété.
+     *
+     * @Vich\UploadableField(mapping="cover_image", fileNameProperty="coverName")
+     *
+     * @var File|null
+     */
+    private $coverFile;
+
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
+    private $coverName;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private $updatedAt;
+
+
+    public function __construct()
+    {
+        $this->giftListThemes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -79,14 +117,14 @@ class GiftList
         return $this;
     }
 
-    public function getPasssword(): ?string
+    public function getPassword(): ?string
     {
-        return $this->passsword;
+        return $this->password;
     }
 
-    public function setPasssword(?string $passsword): static
+    public function setPassword(?string $password): static
     {
-        $this->passsword = $passsword;
+        $this->password = $password;
 
         return $this;
     }
@@ -127,15 +165,98 @@ class GiftList
         return $this;
     }
 
-    public function getGiftListTheme(): ?GiftListTheme
+    public function getGiftListThemes(): Collection
     {
-        return $this->giftListTheme;
+        return $this->giftListThemes;
+    }
+    
+    public function addGiftListTheme(GiftListTheme $giftListTheme): self
+    {
+        if (!$this->giftListThemes->contains($giftListTheme)) {
+            $this->giftListThemes->add($giftListTheme);
+            $giftListTheme->addGiftList($this); // Assurez-vous d'avoir cette méthode dans GiftListTheme
+        }
+        return $this;
+    }
+    
+    public function removeGiftListTheme(GiftListTheme $giftListTheme): self
+    {
+        if ($this->giftListThemes->contains($giftListTheme)) {
+            $this->giftListThemes->removeElement($giftListTheme);
+            $giftListTheme->removeGiftList($this); // Assurez-vous d'avoir cette méthode dans GiftListTheme
+        }
+        return $this;
     }
 
-    public function setGiftListTheme(?GiftListTheme $giftListTheme): static
+    public function getUser(): ?User
     {
-        $this->giftListTheme = $giftListTheme;
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    public function isArchived(): ?bool
+    {
+        return $this->isArchived;
+    }
+
+    public function setArchived(bool $isArchived): self
+    {
+        $this->isArchived = $isArchived;
+        return $this;
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        if ($this->getDateOuverture() && $this->getDateFinOuverture() && $this->getDateOuverture() >= $this->getDateFinOuverture()) {
+            $context->buildViolation('La date d\'ouverture doit être antérieure à la date de fermeture.')
+                ->atPath('dateOuverture')
+                ->addViolation();
+        }
+    }
+
+    public function setCoverFile(?File $coverFile = null): void
+    {
+        $this->coverFile = $coverFile;
+
+        if (null !== $coverFile) {
+            // "touch" l'entité pour forcer une mise à jour dans la base de données
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getCoverFile(): ?File
+    {
+        return $this->coverFile;
+    }
+
+    public function setCoverName(?string $coverName): void
+    {
+        $this->coverName = $coverName;
+    }
+
+    public function getCoverName(): ?string
+    {
+        return $this->coverName;
+    }
+    
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
+
 }

@@ -42,6 +42,15 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        $user = $token->getUser();
+
+        if (method_exists($user, 'isVerified') && !$user->isVerified()) {
+            $request->getSession()->getFlashBag()->add('error', 'Votre compte n\'est pas vérifié. Veuillez vérifier votre compte avant de vous connecter.');
+
+            // Redirigez vers une page informant l'utilisateur qu'il doit vérifier son compte
+            return new RedirectResponse($this->urlGenerator->generate('app_login'));
+        }
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
