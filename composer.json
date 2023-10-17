@@ -11,7 +11,8 @@
         "ext-iconv": "*",
         "doctrine/doctrine-bundle": "^2.9",
         "doctrine/doctrine-migrations-bundle": "^3.2",
-        "doctrine/orm": "^2.14",
+        "doctrine/orm": "^2.16",
+        "fabpot/goutte": "^4.0",
         "getbrevo/brevo-php": "1.x.x",
         "sendgrid/sendgrid": "^8.0",
         "sendinblue/api-v3-sdk": "^8.4",
@@ -39,7 +40,7 @@
         "symfony/yaml": "6.2.*",
         "symfonycasts/verify-email-bundle": "*",
         "twig/twig": "^3.0",
-        "vich/uploader-bundle": "*"
+        "vich/uploader-bundle": "^2.2"
     },
     "config": {
         "allow-plugins": {

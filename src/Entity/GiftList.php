@@ -13,6 +13,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: GiftListRepository::class)]
+#[Vich\Uploadable]
 class GiftList
 {
     #[ORM\Id]
@@ -53,13 +54,7 @@ class GiftList
     #[ORM\ManyToOne(targetEntity: User::class,inversedBy: 'giftLists')]
     private $user;
 
-    /**
-     * NOTE: Ce n'est pas un champ mappé de l'entité de base de données, juste une simple propriété.
-     *
-     * @Vich\UploadableField(mapping="cover_image", fileNameProperty="coverName")
-     *
-     * @var File|null
-     */
+    #[Vich\UploadableField(mapping: "cover_image", fileNameProperty: "coverName")]
     private $coverFile;
 
     #[ORM\Column(type: "string", length: 255, nullable: true)]
@@ -68,10 +63,16 @@ class GiftList
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private $updatedAt;
 
+    #[ORM\OneToMany(targetEntity: Gift::class, mappedBy: "giftList", cascade: ["persist", "remove"])]
+    private Collection $gifts;
+
+
 
     public function __construct()
     {
         $this->giftListThemes = new ArrayCollection();
+        $this->gifts = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -218,6 +219,12 @@ class GiftList
                 ->atPath('dateOuverture')
                 ->addViolation();
         }
+
+        if ($this->isPrivate && empty($this->password)) {
+            $context->buildViolation('Password is required when isPrivate is true.')
+                ->atPath('password')
+                ->addViolation();
+        }
     }
 
     public function setCoverFile(?File $coverFile = null): void
@@ -253,6 +260,34 @@ class GiftList
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+     /**
+     * @return Collection|Gift[]
+     */
+    public function getGifts(): Collection
+    {
+        return $this->gifts;
+    }
+
+    public function addGift(Gift $gift): self
+    {
+        if (!$this->gifts->contains($gift)) {
+            $this->gifts[] = $gift;
+            $gift->setGiftList($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGift(Gift $gift): self
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->gifts->removeElement($gift) && $gift->getGiftList() === $this) {
+            $gift->setGiftList(null);
+        }
 
         return $this;
     }

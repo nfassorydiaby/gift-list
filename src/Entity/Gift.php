@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\GiftRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 
 #[ORM\Entity(repositoryClass: GiftRepository::class)]
 class Gift
@@ -24,6 +26,11 @@ class Gift
 
     #[ORM\Column(length: 255)]
     private ?string $lienAchat = null;
+
+    #[ORM\ManyToOne(targetEntity: GiftList::class, inversedBy: "gifts")]
+    #[ORM\JoinColumn(nullable: false)]
+    private $giftList;
+
 
     public function getId(): ?int
     {
@@ -77,4 +84,17 @@ class Gift
 
         return $this;
     }
+
+    public function getGiftList(): ?GiftList
+    {
+        return $this->giftList;
+    }
+
+    public function setGiftList(?GiftList $giftList): self
+    {
+        $this->giftList = $giftList;
+
+        return $this;
+    }
+
 }

@@ -17,9 +17,10 @@
                     <h1>Gift List</h1>
                     <nav>
                         <ul>
-                            <li><a href="#">Accueil</a></li>
-                            <li><a href="{{ path('front_app_gift_list_new') }}">Créer une Liste</a></li>
-                            <li><a href="{{ path('front_app_gift_list_index') }}">Parcourir les Listes</a></li>
+                            {% if app.user %}
+                                <li><a href="{{ path('front_app_gift_list_new') }}">Créer une Liste</a></li>
+                            {% endif %}
+                            <li><a href="{{ path('front_app_gift_list_index') }}">Listes de cadeaux</a></li>
                         </ul>
                     </nav>
                     <div class="login-link">

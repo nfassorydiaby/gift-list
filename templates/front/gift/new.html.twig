@@ -1,0 +1,16 @@
+{# templates/gift/new.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un nouveau cadeau{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un nouveau cadeau</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn">{{ button_label|default('Ajouter') }}</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('gift_index') }}">Retour à la liste</a>
+{% endblock %}
