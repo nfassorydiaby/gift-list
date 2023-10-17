@@ -17,6 +17,13 @@
             {% endfor %}
             <h2>{{ giftList.titre }}</h2>
             
+            {% if giftList.coverName %}
+                {# Assurez-vous que 'app.path.cover_images' dans 'vich_uploader.yaml' est configuré pour pointer vers le répertoire public des images #}
+                <div class="gift-list-cover-image">
+                    <img src="{{ asset('uploads/images/products/' ~ giftList.coverName) }}" alt="Image de couverture pour {{ giftList.titre }}" style="max-width: 100%; height: auto;">
+                </div>
+            {% endif %}
+            
             <div>
                 <strong>Description :</strong>
                 <p>{{ giftList.description }}</p>
@@ -39,17 +46,57 @@
                 </ul>
             </div>
 
-            <div>
-                <strong>Statut :</strong>
-                <ul>
-                    <li>Publique: {{ giftList.isIsPrivate() ? 'Non' : 'Oui' }}</li>
-                    {% if app.user and app.user == giftList.user %}
-                        <li>Active: {{ giftList.isIsActive() ? 'Oui' : 'Non' }}</li>
-                        <li>Archivée: {{ giftList.isArchived() ? 'Oui' : 'Non' }}</li> {# Assurez-vous d'avoir une méthode isIsArchived ou un champ similaire #}
-                    {% endif %}
-                </ul>
-            </div>
+            {% if app.user and app.user == giftList.user %}
+
+                <div>
+                    <strong>Statut :</strong>
+                    <ul>
+                        <li>Publique: {{ giftList.isIsPrivate() ? 'Non' : 'Oui' }}</li>
+                        {% if app.user and app.user == giftList.user %}
+                            <li>Active: {{ giftList.isIsActive() ? 'Oui' : 'Non' }}</li>
+                            <li>Archivée: {{ giftList.isArchived() ? 'Oui' : 'Non' }}</li> {# Assurez-vous d'avoir une méthode isIsArchived ou un champ similaire #}
+                        {% endif %}
+                    </ul>
+                </div>  
+            {% endif %}
+
             <hr />
+
+            {# Section pour afficher les cadeaux #}
+            <h3>Cadeaux dans cette liste :</h3>
+            {% if giftList.getGifts|length > 0 %}
+                <div class="gifts-container">
+                    {% for gift in giftList.getGifts %}
+                        <div class="gift-item">
+                            <h4>{{ gift.getNom }}</h4>
+                            {# Afficher l'image si l'URL de l'image est disponible #}
+                            {% if gift.getImage %}
+                                <div class="gift-image">
+                                    <img src="{{ gift.getImage }}" alt="Image pour {{ gift.getNom }}" style="max-width: 100px; height: auto;">
+                                </div>
+                            {% endif %}
+                            <p>Prix: {{ gift.getPrix }} €</p>
+                            {# Autres propriétés du cadeau que vous voudriez afficher #}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>Aucun cadeau trouvé dans cette liste.</p>
+            {% endif %}
+
+            <hr />
+
+
+            {% if app.user and app.user == giftList.user %} {# ou une autre logique d'autorisation si vous le souhaitez #}
+                <h3>Ajouter un nouveau cadeau</h3>
+                {{ form_start(urlForm) }}
+                    {{ form_widget(urlForm) }}
+                    <button class="btn">{{ button_label|default('Ajouter') }}</button>
+                {{ form_end(urlForm) }}
+            {% endif %}
+
+            <hr />
+
             {% if app.user and app.user == giftList.user %}
                 <a href="{{ path('front_app_gift_list_edit', {'id': giftList.id}) }}" class="btn-link">Modifier cette liste</a>
                 {% if giftList.isArchived() %}

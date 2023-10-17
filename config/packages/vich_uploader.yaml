@@ -1,0 +1,10 @@
+vich_uploader:
+    db_driver: orm # ou mongodb si vous utilisez MongoDB
+    mappings:
+        cover_image:
+            uri_prefix: '%app.path.product_images%'
+            upload_destination: '%kernel.project_dir%/public%app.path.product_images%'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer # utilise un nom de fichier unique basé sur uniqid()
+            inject_on_load: false # lorsqu'il est défini sur true, le fichier est injecté dans l'entité lors du chargement de l'entité depuis la base de données
+            delete_on_update: true # lorsque défini sur true, l'ancien fichier est supprimé lors de la mise à jour de l'entité
+            delete_on_remove: true # lorsque défini sur true, le fichier est supprimé lors de la suppression de l'entité

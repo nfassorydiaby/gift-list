@@ -1,0 +1,20 @@
+{# templates/gift_list/show_shared_gift_list.html.twig #}
+
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Liste de Cadeaux Partagée{% endblock %}
+
+{% block body %}
+    <h1>Liste de Cadeaux</h1>
+    
+    {% if giftList %}
+         <h2>{{ giftList.titre }}</h2>
+        <p>Lien : <a href="{{ giftList.link }}">{{ giftList.link }}</a></p>
+        
+        {% if giftList.password %}
+            <p>Mot de passe : {{ giftList.password }}</p> {# Le mot de passe sera affiché en clair #}
+        {% endif %}
+    {% else %}
+        <p>Cette liste de cadeaux n'existe pas ou le lien n'est plus valide.</p>
+    {% endif %} {# Ceci ferme le bloc if pour giftList #}
+{% endblock %}

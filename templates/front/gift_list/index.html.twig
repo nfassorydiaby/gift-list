@@ -15,15 +15,18 @@
         <h1 class="gift-list-header">Toutes les listes de cadeaux</h1>
         <div class="gift-lists">
             {% if giftLists|length > 0 %}
-                <ul class="gift-lists-list">
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between;"> {# Ajout de styles pour le conteneur de cartes #}
                     {% for giftList in giftLists %}
-                        <li class="gift-list-item">
+                        <div style="flex: 0 1 30%; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 20px; padding: 15px; box-shadow: 1px 1px 5px rgba(0,0,0,.1);"> {# Styles pour chaque carte #}
                             <h2>{{ giftList.titre }}</h2>
+                            {% if giftList.coverName %}
+                                <img src="{{ asset('uploads/images/products/' ~ giftList.coverName) }}" alt="Image de couverture pour {{ giftList.titre }}" style="max-width: 100%; height: auto; border-radius: 4px; margin-bottom: 15px;"> {# Styles pour l'image #}
+                            {% endif %}
                             <p>{{ giftList.description }}</p>
-                            <a href="{{ path('front_app_gift_list_show', {'id': giftList.id}) }}">Voir la liste</a>
-                        </li>
+                            <a href="{{ path('front_app_gift_list_show', {'id': giftList.id}) }}" style="display: inline-block; padding: 6px 12px; color: white; background-color: #007bff; border-radius: 4px; text-decoration: none; text-align: center;">Voir la liste</a> {# Styles pour le bouton #}
+                        </div>
                     {% endfor %}
-                </ul>
+                </div>
             {% else %}
                 <p>Il n'y a actuellement aucune liste de cadeaux disponible.</p>
             {% endif %}
