@@ -15,6 +15,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Vich\UploaderBundle\Form\Type\VichImageType;
+
 
 class GiftListType extends AbstractType
 {
@@ -59,23 +61,21 @@ class GiftListType extends AbstractType
                 'label' => 'Thème de la liste de cadeaux',
                 'multiple' => true,  
             ])
-            ->add('coverImage', FileType::class, [
-                'label' => 'Image de couverture (fichier image)',
-                'mapped' => false, // car l'entité contient le chemin du fichier, pas le fichier lui-même
+            ->add('coverFile', VichImageType::class, [
                 'required' => false,
-                'constraints' => [
-                    new Assert\Image([
-                        'maxSize' => '5M'
-                        // ... autres contraintes si nécessaire ...
-                    ]),
-                ],
-            ]);
+                'allow_delete' => true,
+                'delete_label' => 'Supprimer la couverture ?',
+                'download_label' => 'Télécharger',
+                'download_uri' => true,
+                'image_uri' => true,
+                'label' => 'Image de Couverture (fichier image)',
+            ]);;
 
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
             $data = $event->getData();
             $form = $event->getForm();
     
-            if (isset($data['isPrivate']) && $data['isPrivate'] == true) {
+            if (isset($data['isPrivate']) && $data['isPrivate'] == true && empty($data['password'])) {
                 $form->getConfig()->getOption('validation_groups')[] = 'PasswordRequired';
             }
         });
