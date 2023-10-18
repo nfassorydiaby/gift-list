@@ -1,0 +1,18 @@
+{# templates/back/gift_list/edit.html.twig #}
+
+{% extends 'base_back.html.twig' %}
+
+{% block title %}Modifier la liste de cadeaux{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Modifier la liste de cadeaux</h1>
+
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn btn-primary">Sauvegarder les modifications</button>
+        {{ form_end(form) }}
+
+        <a href="{{ path('back_admin_user_index') }}" class="btn btn-secondary mt-3">Retour à la liste des utilisateurs</a>
+    </div>
+{% endblock %}
