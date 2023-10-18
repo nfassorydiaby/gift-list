@@ -13,6 +13,16 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
          if ($this->getUser()) {
+
+            if (!$this->getUser()->isVerified()) { // Assurez-vous que la méthode isActive() existe dans votre entité User
+                // Déconnecter l'utilisateur
+                return $this->redirectToRoute('app_logout');
+    
+                // Rediriger vers la page de connexion avec un message d'erreur
+                $this->addFlash('error', 'Votre compte n\'est pas activé.'); // Assurez-vous que votre site prend en charge les messages flash
+                return $this->redirectToRoute('app_login'); // Utilisez le nom de route correct pour votre page de connexion
+            }
+    
              return $this->redirectToRoute('front_app_gift_list_index');
          }
 
