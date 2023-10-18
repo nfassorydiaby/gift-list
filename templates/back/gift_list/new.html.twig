@@ -1,0 +1,18 @@
+{# templates/back/gift_list/new.html.twig #}
+
+{% extends 'base_back.html.twig' %}
+
+{% block title %}Nouvelle Liste de Cadeaux{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Créer une nouvelle liste de cadeaux</h1>
+
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-success">Enregistrer</button>
+        {{ form_end(form) }}
+
+        <a href="{{ path('back_admin_user_index') }}" class="btn btn-secondary mt-3">Retour à la liste des utilisateurs</a>
+    </div>
+{% endblock %}
