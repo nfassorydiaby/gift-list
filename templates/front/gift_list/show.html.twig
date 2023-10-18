@@ -15,6 +15,24 @@
                     {{ message }}
                 </div>
             {% endfor %}
+
+
+            {% if app.user and app.user == giftList.user %}
+                {# ... autres éléments de contrôle ... #}
+
+                {# Bouton/Lien pour partager la liste de cadeaux #}
+                <a href="{{ path('front_app_gift_list_share', {'id': giftList.id}) }}" class="btn btn-primary">Partager ma liste de cadeaux</a>
+            {% endif %}
+
+            <!-- ... le reste de votre HTML ... -->
+
+            {# Afficher l'URL de partage si disponible #}
+            {% for url in app.flashes('share_url') %}
+                <div class="alert alert-success">
+                    URL de partage : <a href="{{ url }}">{{ url }}</a>
+                </div>
+            {% endfor %}
+            
             <h2>{{ giftList.titre }}</h2>
             
             {% if giftList.coverName %}
