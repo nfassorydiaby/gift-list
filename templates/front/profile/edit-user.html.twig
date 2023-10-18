@@ -14,10 +14,8 @@
                     <h2 class="form-register-title">Modification de mes informations</h2>
 
                     {# Champs de formulaire générés en fonction de UserEditBackType #}
-                    {{ form_row(editUserForm.email, {'label': 'Email:'}) }}
                     {{ form_row(editUserForm.firstname, {'label': 'Prénom:'}) }}
                     {{ form_row(editUserForm.lastname, {'label': 'Nom:'}) }}
-                    {{ form_row(editUserForm.roles, {'label': 'Rôles:'}) }}
 
                     <div class="flex">
                         <button type="submit" class="btn-default">Valider</button>
