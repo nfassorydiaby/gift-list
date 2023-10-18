@@ -1,0 +1,116 @@
+{# templates/back/user/index.html.twig #}
+
+{% extends 'base_back.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Ajoutez vos styles ici ou dans un fichier CSS séparé */
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #4B5563;
+        }
+
+        .table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #212529;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            padding: .75rem;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .table tbody + tbody {
+            border-top: 2px solid #dee2e6;
+        }
+
+        /* Liens pour les actions */
+        a {
+            color: #3490dc;
+            text-decoration: none;
+            background-color: transparent;
+        }
+
+        a:hover {
+            color: #1d68a7;
+            text-decoration: underline;
+        }
+
+        .btn-new {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            color: white;
+            background-color: #4CAF50; /* Couleur verte */
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-new:hover {
+            background-color: #45a049;
+        }
+
+        /* Style en cas d'absence d'enregistrements */
+        .no-records-found {
+            text-align: center;
+            color: #718096;
+            padding: 20px 0;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Liste des utilisateurs</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles|join(', ') }}</td>
+                <td>
+                    <a href="{{ path('back_admin_user_show', {'id': user.id}) }}">Voir</a> |
+                    <a href="{{ path('back_admin_user_edit', {'id': user.id}) }}">Modifier</a> |
+                     <form action="{{ path('back_admin_user_delete', {'id': user.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette utilisateur ?');" style="display: inline-block;">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                        <button class="btn btn-danger">Supprimer</button>
+                    </form> 
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4" class="no-records-found">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('back_admin_user_new') }}" class="btn-new">Créer un nouveau</a>
+{% endblock %}

@@ -1,61 +1,93 @@
 <?php 
 
+// src/Entity/BookingGift.php
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: BookingGiftRepository::class)]
 class BookingGift
 {
-    #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: "integer")]
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
     private $id;
 
-    #[ORM\Column(type: "string", length: 255)]
-    private $fullName;
+    #[ORM\Column(length: 255, nullable: true)]
+    private $firstName;
 
-    #[ORM\Column(type: "string", length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
+    private $lastName;
+
+
+    #[ORM\Column(length: 180)]
     private $email;
 
-    #[ORM\ManyToOne(targetEntity: Gift::class, inversedBy: "bookings")]
+    #[ORM\ManyToOne(targetEntity: Gift::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Gift $gift;
+    private $gift;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    // src/Entity/BookingGift.php
 
-    public function getFullName(): ?string
-    {
-        return $this->fullName;
-    }
+// ... (autres déclarations de propriétés)
 
-    public function setFullName(string $fullName): self
-    {
-        $this->fullName = $fullName;
-        return $this;
-    }
+// Getters and setters
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
+public function getId(): ?int
+{
+    return $this->id;
+}
 
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-        return $this;
-    }
+public function getFirstName(): ?string
+{
+    return $this->firstName;
+}
 
-    public function getGift(): ?Gift
-    {
-        return $this->gift;
-    }
+public function setFirstName(string $firstName): self
+{
+    $this->firstName = $firstName;
 
-    public function setGift(?Gift $gift): self
-    {
-        $this->gift = $gift;
-        return $this;
-    }
+    return $this;
+}
+
+public function getLastName(): ?string
+{
+    return $this->lastName;
+}
+
+public function setLastName(string $lastName): self
+{
+    $this->lastName = $lastName;
+
+    return $this;
+}
+
+public function getEmail(): ?string
+{
+    return $this->email;
+}
+
+public function setEmail(string $email): self
+{
+    $this->email = $email;
+
+    return $this;
+}
+
+public function getGift(): ?Gift
+{
+    return $this->gift;
+}
+
+public function setGift(?Gift $gift): self
+{
+    $this->gift = $gift;
+
+    return $this;
+}
 
 }
+
+

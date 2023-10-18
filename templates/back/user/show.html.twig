@@ -1,0 +1,73 @@
+{# templates/back/user/show.html.twig #}
+
+{% extends 'base_back.html.twig' %}
+
+{% block title %}Voir utilisateur{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Détails de l'utilisateur</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>ID</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Prénom</th>
+                <td>{{ user.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ user.lastname }}</td>
+            </tr>
+            <tr>
+                <th>Rôles</th>
+                <td>{{ user.roles|join(', ') }}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2>Listes de cadeaux de l'utilisateur</h2>
+        <a href="{{ path('back_admin_gift_list_new', {'userId': user.id}) }}" class="btn btn-success">Créer une nouvelle liste de cadeaux</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for giftList in giftLists %}
+        <tr>
+            <td>{{ giftList.id }}</td>
+            <td>{{ giftList.titre }}</td>
+            <td>{{ giftList.description }}</td>
+            <td>
+                <a href="{{ path('back_admin_gift_list_edit', {'id': giftList.id}) }}">Modifier</a> |
+                <form action="{{ path('back_admin_gift_list_delete', {'id': giftList.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette liste de cadeaux ?');" style="display: inline-block;">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ giftList.id) }}">
+                    <button class="btn btn-danger">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="4">Cet utilisateur n'a pas de listes de cadeaux.</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+    <a href="{{ path('back_admin_user_edit', {'id': user.id}) }}" class="btn btn-primary">Modifier</a>
+    <a href="{{ path('back_admin_user_index') }}" class="btn btn-secondary">Retour à la liste</a>
+</div>
+{% endblock %}

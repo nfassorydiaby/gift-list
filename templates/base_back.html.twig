@@ -6,31 +6,37 @@
     <title>{% block title %}Administration{% endblock %}</title>
     <link rel="icon" type="image/svg+xml" href="/path/to/your/favicon.svg" />
     {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }} {# Assurez-vous de compiler vos assets d'admin séparément #}
+        {{ encore_entry_link_tags('admin') }} {# Assurez-vous de compiler vos assets d'admin séparément #}
     {% endblock %}
 </head>
 <body class="back">
 
-    <aside>
-        <h2>Menu</h2>
-        <nav>
+    <aside class="sidebar">
+        <h2>Gift List</h2>
+        <nav class="nav-menu">
             <ul>
-                <li><a href="">Gestion des utilisateurs</a></li>
-                <li><a href="">Listes de cadeaux</a></li>
-                <li><a href="">Cadeaux</a></li>
+                <li><a href="{{ path('back_admin_user_index') }}">Gestion des utilisateurs</a></li>
+                <li><a href="{{ path('front_app_gift_list_new') }}">Listes de cadeaux</a></li>
+                <li><a href="{{ path('front_app_gift_list_new') }}">Cadeaux</a></li>
+                <li><a href="/logout" class="logout-button">Déconnexion</a></li> <!-- Déconnexion déplacée ici -->
             </ul>
         </nav>
     </aside>
 
-    <main>
-        <header>
-            <h1>Administration</h1>
+    <div class="main-content">
+        <header class="main-header">
+            <div class="top-bar">
+                <h1>Tableau de bord</h1>
+                <!-- Bouton de déconnexion supprimé d'ici -->
+            </div>
         </header>
 
-        <section>
-            {% block body %}{% endblock %}
-        </section>
-    </main>
+        <main>
+            <div class="container">
+                {% block body %}{% endblock %}
+            </div>
+        </main>
+    </div>
 
 </body>
 </html>

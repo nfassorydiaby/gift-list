@@ -1,0 +1,30 @@
+
+<div style="background-color: #f7f7f7; padding: 20px;">
+    <div style="max-width: 600px; margin: auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1);">
+        <h2 style="color: #333; margin-top: 0;">Notification de Réservation de Cadeau</h2>
+        
+        <p>Bonjour {{ creator.firstName }} {{ creator.lastName }},</p>
+        
+        <p>Nous voulons vous informer qu'un cadeau de votre liste a été réservé. Voici les détails :</p>
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <td style="border: 1px solid #eaeaea; padding: 10px;"><strong>Nom du cadeau</strong></td>
+                <td style="border: 1px solid #eaeaea; padding: 10px;">{{ gift.name }}</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #eaeaea; padding: 10px;"><strong>Description</strong></td>
+                <td style="border: 1px solid #eaeaea; padding: 10px;">{{ gift.description }}</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #eaeaea; padding: 10px;"><strong>Réservé par</strong></td>
+                <td style="border: 1px solid #eaeaea; padding: 10px;">{{ booker.firstName }} {{ booker.lastName }}</td>
+            </tr>
+            {# Ajoutez d'autres champs si nécessaire #}
+        </table>
+        
+        <p>Pour voir tous les détails, veuillez visiter votre liste de cadeaux sur notre site.</p>
+        
+        <p>Merci de votre attention,</p>
+        <p><strong>Gift Management</strong></p>
+    </div>
+</div>
