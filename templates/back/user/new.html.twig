@@ -1,0 +1,51 @@
+{# templates/back/user/new.html.twig #}
+
+{% extends 'base_back.html.twig' %}
+
+
+{% block title %}Créer un utilisateur{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Créer un nouvel utilisateur</h1>
+
+        {{ form_start(form) }}
+            <div class="mb-3">
+                {{ form_label(form.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_errors(form.email) }}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.firstname, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_errors(form.firstname) }}
+                {{ form_widget(form.firstname, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.lastname, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_errors(form.lastname) }}
+                {{ form_widget(form.lastname, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.roles, 'Rôles', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_errors(form.roles) }}
+                {{ form_widget(form.roles, {'attr': {'class': 'form-check'}}) }}
+            </div>
+
+            {# Si vous avez ajouté un champ pour le mot de passe #}
+            <div class="mb-3">
+                {{ form_label(form.password, 'Mot de passe', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_errors(form.password) }}
+                {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div>
+                {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+            </div>
+        {{ form_end(form) }}
+
+        <a href="{{ path('back_admin_user_index') }}" class="btn btn-secondary mt-3">Retour à la liste</a>
+    </div>
+{% endblock %}

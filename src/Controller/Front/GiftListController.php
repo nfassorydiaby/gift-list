@@ -156,7 +156,7 @@ class GiftListController extends AbstractController
     }
 
     /**
-     * @IsGranted("ROLE_USER")
+     * @IsGranted("PUBLIC_ACCESS")
      */
     #[Route('/{id}/check-password', name: 'app_gift_list_check_password', methods: ['POST'])]
     public function checkPassword(GiftList $giftList, Request $request): Response

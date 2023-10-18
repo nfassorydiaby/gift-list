@@ -20,6 +20,7 @@ class EmailService
 
     public function sendVerificationEmail($destinator, $subject, $htmlContent): void
     {
+
         $email = new Mail();
         $email->setFrom('ndiaby6@myges.fr', 'Gift Online');
         $email->setSubject($subject);
@@ -36,6 +37,7 @@ class EmailService
         $sendgrid = new SendGrid($this->sendGridApiKey);
         try {
             $response = $sendgrid->send($email);
+
             if ($response->statusCode() != 202) {
                 throw new Exception('Failed to send email: ' . $response->body());
             }

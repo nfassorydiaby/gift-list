@@ -20,9 +20,4 @@ class DefaultController extends AbstractController
         ]);
     }
 
-    #[Route('/termine', name: 'app_default_finish')]
-    public function test(Request $request): Response
-    {
-        return $this->render('front/default/finish.html.twig');
-    }
 }

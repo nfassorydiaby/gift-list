@@ -31,6 +31,14 @@ class Gift
     #[ORM\JoinColumn(nullable: false)]
     private $giftList;
 
+   
+    #[ORM\Column(type: "boolean")]
+    private $isBooked = false;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private $bookedBy;
+
 
     public function getId(): ?int
     {
@@ -93,6 +101,30 @@ class Gift
     public function setGiftList(?GiftList $giftList): self
     {
         $this->giftList = $giftList;
+
+        return $this;
+    }
+
+    public function isBooked(): bool
+    {
+        return $this->isBooked;
+    }
+
+    public function setIsBooked(bool $isBooked): self
+    {
+        $this->isBooked = $isBooked;
+
+        return $this;
+    }
+
+    public function getBookedBy(): ?User
+    {
+        return $this->bookedBy;
+    }
+
+    public function setBookedBy(?User $bookedBy): self
+    {
+        $this->bookedBy = $bookedBy;
 
         return $this;
     }

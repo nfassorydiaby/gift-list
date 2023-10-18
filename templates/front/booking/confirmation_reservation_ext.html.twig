@@ -1,0 +1,22 @@
+<div style="background-color: #f7f7f7; padding: 20px;">
+    <div style="max-width: 600px; margin: auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1);">
+        <h2 style="color: #333; margin-top: 0;">Rappel de Réservation</h2>
+        
+        <p>Bonjour {{ user.firstName }} {{ user.lastName }},</p>
+        
+        <p>Nous vous rappelons que vous avez réservé le cadeau suivant :</p>
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <td style="border: 1px solid #eaeaea; padding: 10px;"><strong>Nom du cadeau</strong></td>
+                <td style="border: 1px solid #eaeaea; padding: 10px;">{{ gift.nom }}</td>
+            </tr>
+            {# Ajoutez d'autres champs si nécessaire #}
+        </table>
+        
+        <p>Si vous souhaitez annuler cette réservation pour une raison quelconque, veuillez cliquer sur le lien ci-dessous :</p>
+        <a href="{{ cancelUrl }}" style="display: inline-block; background-color: #d9534f; color: #ffffff; padding: 10px 15px; border-radius: 4px; text-decoration: none;">Annuler la réservation</a>
+        
+        <p>Merci de votre attention,</p>
+        <p><strong>Gift Management</strong></p>
+    </div>
+</div>

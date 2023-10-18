@@ -90,7 +90,15 @@
                                 </div>
                             {% endif %}
                             <p>Prix: {{ gift.getPrix }} €</p>
-                            {# Autres propriétés du cadeau que vous voudriez afficher #}
+                            {% if not gift.isBooked() %}
+                                <a href="{{ path('front_app_booking_reserve', {'id': gift.id}) }}" class="btn btn-primary">Réserver</a>
+                            {% else %}
+                                {% if app.user == gift.getBookedBy() %} {# Assurez-vous que la méthode getBookedBy() retourne l'utilisateur qui a réservé le cadeau #}
+                                    <a href="{{ path('front_app_booking_cancel', {'id': gift.id}) }}" class="btn btn-warning">Annuler la réservation</a>
+                                {% else %}
+                                    <button class="btn btn-secondary" disabled>Réservé</button>
+                                {% endif %}
+                            {% endif %}
                         </div>
                     {% endfor %}
                 </div>
