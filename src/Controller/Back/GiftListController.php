@@ -3,6 +3,7 @@
 // src/Controller/Back/GiftListController.php
 namespace App\Controller\Back;
 
+use App\Entity\User;
 use App\Entity\GiftList;
 use App\Form\GiftListType;
 use App\Repository\GiftListRepository;
@@ -10,8 +11,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @IsGranted("ROLE_ADMIN")
@@ -23,26 +24,35 @@ class GiftListController extends AbstractController
     /**
      * @IsGranted("ROLE_ADMIN")
      */
-    #[Route('/new', name: 'admin_gift_list_new', methods: ['GET', 'POST'])]
-    public function new(Request $request,  EntityManagerInterface $entityManager): Response
-    {
-        $giftList = new GiftList();
-        $form = $this->createForm(GiftListType::class, $giftList);
-        $form->handleRequest($request);
+    #[Route('/new/{userId}', name: 'admin_gift_list_new', methods: ['GET', 'POST'])]
+public function new(Request $request, EntityManagerInterface $entityManager, $userId): Response
+{
+    $user = $entityManager->getRepository(User::class)->find($userId);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $entityManager->persist($giftList);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('back_admin_user_index');
-        }
-
-        return $this->render('back/gift_list/new.html.twig', [
-            'gift_list' => $giftList,
-            'form' => $form->createView(),
-        ]);
+    if (!$user) {
+        throw $this->createNotFoundException('Aucun utilisateur trouvé pour l\'id '.$userId);
     }
+
+    $giftList = new GiftList();
+    // Associer l'utilisateur à la giftList dès le début
+    $giftList->setUser($user);
+
+    $form = $this->createForm(GiftListType::class, $giftList);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $entityManager->persist($giftList);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('back_admin_user_index');
+    }
+
+    return $this->render('back/gift_list/new.html.twig', [
+        'gift_list' => $giftList,
+        'form' => $form->createView(),
+    ]);
+}
+
 
 
     /**
@@ -51,7 +61,6 @@ class GiftListController extends AbstractController
     #[Route('/{id}/edit', name: 'admin_gift_list_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, GiftList $giftList, EntityManagerInterface $entityManager): Response
     {
-        $giftList = new GiftList();
 
         $form = $this->createForm(GiftListType::class, $giftList);
         $form->handleRequest($request);
@@ -60,7 +69,7 @@ class GiftListController extends AbstractController
             $entityManager->persist($giftList);
             $entityManager->flush();
 
-            return $this->redirectToRoute('back_admin_gift_list_index');
+            return $this->redirectToRoute('back_admin_user_index');
         }
 
         return $this->render('back/gift_list/edit.html.twig', [
